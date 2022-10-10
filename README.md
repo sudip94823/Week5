@@ -333,8 +333,8 @@ Navigate back, ros2_ws, and build your new package: (All the new packages are bu
 ```
 colcon build --packages-select py_srvcli
 ```
+![#5Building_new_package](https://user-images.githubusercontent.com/113494159/194867315-550e45fb-149d-4690-898d-ef3bc1130c1b.png)
 
-![a2](https://user-images.githubusercontent.com/58104378/194231383-3a6d35dd-c72f-4e9e-ad31-c60b2d414c57.png)
 
 Open a new terminal, navigate to ros2_ws, and source the setup files:
 
@@ -350,29 +350,26 @@ ros2 run py_srvcli service
 
 The node will watch for the client's request.
 
-Re-source the setup files from ros2 ws in a new terminal. The client node, any two integers, and a space between them.
+Similarly, in another terminal, source the setupfiles inside ros2_ws and start the client node, any two integers, and a space between them.
 
 ```
 ros2 run py_srvcli client 2 3
 ```
+![#6ServiceNode](https://user-images.githubusercontent.com/113494159/194867406-4de23191-a13e-489e-b3f5-928245106f6c.png)
+
 
 The client would get a response like this if you selected options 2 and 3 as an example:
 
 ```
 [INFO] [minimal_client_async]: Result of add_two_ints: for 2 + 3 = 5
 ```
-
-
-![a3](https://user-images.githubusercontent.com/58104378/194233544-34c78a69-41a1-4a83-9c5f-631d2d4f845f.png)
-
-You should return to the terminal where your service node is running. As you can see, it published the following log statements after receiving the request:
+ As you can see, it published the following log statements after receiving the request:
 
 ```
 [INFO] [minimal_service]: Incoming request
 a: 2 b: 3
 ```
-
-![a4](https://user-images.githubusercontent.com/58104378/194234334-194efd1b-981d-4994-af7e-08a8992ef3b5.png)
+![#6ClientNode](https://user-images.githubusercontent.com/113494159/194867428-76a74465-1b61-4374-9e2f-b7835f307b70.png)
 
 
 # Creating custom msg and srv files
@@ -384,7 +381,8 @@ Run the package creation command by going to ros2 ws/src:
 ros2 pkg create --build-type ament_cmake tutorial_interfaces
 ```
 
-Your terminal will display a message confirming the establishment of your package tutorial interfaces and every file and folder it needs. Due to the fact that pure Python packages cannot currently generate.msg or.srv files, it should be stated that this is a CMake package. A custom interface that you create in a CMake package can be used by a Python node, which will be covered in the last section.
+Your terminal will display a message confirming the establishment of your package tutorial interfaces and every file and folder it needs.
+*Due to the fact that pure Python packages cannot currently generate.msg or.srv files, it should be stated that this is a CMake package. A custom interface that you create in a CMake package can be used by a Python node, which will be covered in the last section.*
 
 It's best practice to keep the.msg and.srv files separated within a package. Create the directories in the ros2 ws/src/tutorial interfaces.
 
@@ -393,7 +391,6 @@ mkdir msg
 
 mkdir srv
 ```
-![c1](https://user-images.githubusercontent.com/58104378/194291243-793b703b-9873-4e46-95d5-ed00f6444dd0.png)
 
 
 ## 2 Create custom definitions
@@ -412,6 +409,9 @@ float64 radius
 ```
 This custom message makes use of a message from a different message package (in this case, geometry msgs/Point).
 
+![image](https://user-images.githubusercontent.com/113494159/194868003-fcef064a-447a-4f70-8be6-389deeeecd30.png)
+
+
 ## 2.2 srv definition
 In the instructional interfaces/srv directory that you just created, add a new file with the name AddThreeInts.srv with the following request and response structure:
 ```
@@ -423,6 +423,8 @@ int64 sum
 ```
 
 This is a custom service that accepts three integers with names a, b, and c and returns an answer with the integer sum.
+![image](https://user-images.githubusercontent.com/113494159/194868086-e98a6ffa-d593-4a55-a561-766f604fb2c8.png)
+
 
 ## 3 CMakeLists.txt
 To convert the interfaces you defined into language-specific code (such as C++ and Python) so they may be used in those languages, add the following lines to CMakeLists.txt:
@@ -456,8 +458,6 @@ Now that all of the pieces of your custom interfaces package are in place, you c
 colcon build --packages-select tutorial_interfaces
 ```
 
-![c4](https://user-images.githubusercontent.com/58104378/194284059-0da36d3a-6ceb-42ae-9f33-d9769b451b8f.png)
-
 Now, the interfaces will be discoverable by other ROS 2 programs.
 
 ## 6 Confirm msg and srv creation
@@ -484,9 +484,6 @@ ros2 interface show tutorial_interfaces/msg/Sphere
 should return
 ```
 geometry_msgs/Point center
-        float64 x
-        float64 y
-        float64 z
 float64 radius
 ```
 
@@ -503,8 +500,8 @@ int64 c
 ---
 int64 sum
 ```
+![#7ConfirmMsg](https://user-images.githubusercontent.com/113494159/194868448-413c079b-e17e-4683-9dfa-c9c384fd5068.png)
 
-![d1](https://user-images.githubusercontent.com/58104378/194285656-fbda7b36-5780-4afd-90bc-048b5165d3fb.png)
 
 ## 7 Test the new interfaces
 For this step, you can use the packages you created in the prior stages. By making a few simple adjustments to the nodes, CMakeLists, and package files, you can use your new interfaces.
@@ -627,11 +624,6 @@ Build the package after making the aforementioned alterations and saving all the
 colcon build --packages-select py_pubsub
 ```
 
-On Windows:
-
-```
-colcon build --merge-install --packages-select py_pubsub
-```
 
 Then open two new terminals, source ros2_ws in each, and run:
 
@@ -639,9 +631,6 @@ Then open two new terminals, source ros2_ws in each, and run:
 ros2 run py_pubsub talker
 ```
 
-    
-![e3](https://user-images.githubusercontent.com/58104378/194287426-ae7f6e32-513f-46d0-9978-88aec26d301b.png)
-![e2](https://user-images.githubusercontent.com/58104378/194288329-15cb6f9a-4721-419f-a335-6e0154e9d075.png)
 
 Instead of broadcasting strings as Num.msg only relays an integer, the talker should only be publishing integer values:
 ```
@@ -649,6 +638,10 @@ Instead of broadcasting strings as Num.msg only relays an integer, the talker sh
 [INFO] [minimal_publisher]: Publishing: '1'
 [INFO] [minimal_publisher]: Publishing: '2'
 ```
+
+![#8Talker](https://user-images.githubusercontent.com/113494159/194868620-addeee33-2314-45f6-888d-4269ad51e013.png)
+![#8Listener](https://user-images.githubusercontent.com/113494159/194868642-8420b022-b72c-4a1c-b58d-dbd178af6370.png)
+
 
 ## 7.2 Testing AddThreeInts.srv with service/client
 
@@ -740,32 +733,8 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 ```
-CMakeLists.txt:
 
-Add the following lines (C++ only):
-```
-#...
-
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(tutorial_interfaces REQUIRED)        # CHANGE
-
-add_executable(server src/add_two_ints_server.cpp)
-ament_target_dependencies(server
-  rclcpp tutorial_interfaces)                      #CHANGE
-
-add_executable(client src/add_two_ints_client.cpp)
-ament_target_dependencies(client
-  rclcpp tutorial_interfaces)                      #CHANGE
-
-install(TARGETS
-  server
-  client
-  DESTINATION lib/${PROJECT_NAME})
-
-ament_package()
-```
-package.xml:
+Package.xml:
 
 Add the following line:
 ```
@@ -776,24 +745,22 @@ After making the above edits and saving all the changes, build the package:
 ```
 colcon build --packages-select py_srvcli
 ```
-On Windows:
 
-```
-colcon build --merge-install --packages-select py_srvcli
-```
 Then open two new terminals, source ros2_ws in each, and run:
 
 ```
 ros2 run py_srvcli service
 
 ```
-![11](https://user-images.githubusercontent.com/58104378/194289956-93714d9c-1fd6-495a-b5eb-38acbc791bd4.png)
+![#9Testing2](https://user-images.githubusercontent.com/113494159/194869065-deb540af-f75c-4daa-a16f-341e0b3adae4.png)
+
 
 ```
 ros2 run py_srvcli client 2 3 1
 
 ```
-![12](https://user-images.githubusercontent.com/58104378/194290393-2a42fbe5-f522-4c9c-b7c8-54111e6854e7.png)
+![#9Testing](https://user-images.githubusercontent.com/113494159/194869081-a2beb249-050b-4d97-a7fd-ed927e9090fe.png)
 
 
-    
+
+    #Sorry for the late submission.
