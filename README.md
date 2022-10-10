@@ -178,28 +178,28 @@ Ctrl+C will stop the nodes.
 
 
 # A simple Service & Client
+Here , the goal is to create and run service and client nodes using Python.
+
 ## 1. Creating a Package
 Run the package creation command by going to ros2 ws/src:
+It is exactly same process to getting into same directory and creating a new package.
+
 ```
 ros2 pkg create --build-type ament_python py_srvcli --dependencies rclpy example_interfaces
 ```
+The terminal shows the confirmation message of package creation and its necessary files and folders.
+![#5Building_new_package](https://user-images.githubusercontent.com/113494159/194864310-6e998d53-15f5-4d44-ab14-d1ff9f7b2155.png)
 
-You will see confirmation from your terminal that your package py srvcli and all of its necessary files and folders have been created.
 
-![aa](https://user-images.githubusercontent.com/58104378/194223513-3d1b64ac-f3ef-4348-b398-7ad773bdf697.png)
 
 ## 1.1 Update Package.xml
-Because you used the —dependencies option when generating the package, you don't need to manually add dependencies to package.xml.
-
-But as always, don't forget to add the description, maintainer's name and email, and licensing information to package.xml
+As we used the —dependencies option when generating the package, you don't need to manually add dependencies to package.xml, but as always, It is important to add the description, maintainer's name and email, and licensing information to package.xml
 
 ```
 <description>Python client server tutorial</description>
 <maintainer email="you@email.com">Your Name</maintainer>
 <license>Apache License 2.0</license>
 ```
-
-![bb](https://user-images.githubusercontent.com/58104378/194224430-fe91f493-b1ea-4c5a-a963-e3664a6a857e.png)
 
 ## 1.2 Update setup.py
 The following details should be added to the setup.py file's description, maintainer, maintainer email, and license fields:
@@ -209,12 +209,10 @@ maintainer_email='you@email.com',
 description='Python client server tutorial',
 license='Apache License 2.0',
 ```
-![cc](https://user-images.githubusercontent.com/58104378/194225240-49bc0a1b-81f4-4709-9850-42e1fe294bfb.png)
+***I haven't added the screenshot as its the same process which we did earlier.***
 
-## 2 Write the service node
-In the ros2 ws/src/py srvcli/py srvcli directory, make a new file called service member function.py, and then paste the following code inside:
-
-![dd](https://user-images.githubusercontent.com/58104378/194226758-c76b5289-9deb-41a9-b656-a9f1bf083ce5.png)
+## 2. Write the service node
+In the following directories: ros2_ws/src/py_srvcli/py_srvcli, a new file named service_member_function.py is created and the following code is pasted within the file:
 
 And paste the following code inside:
 ```
@@ -259,10 +257,9 @@ In between the "console scripts" brackets, the following line should be added:
 ```
 'service = py_srvcli.service_member_function:main',
 ```
-![ee](https://user-images.githubusercontent.com/58104378/194227837-9e1018ee-e035-48cf-b41e-f0ef3a5b736a.png)
 
 ## 3 Write the client node
-In the ros2 ws/src/py srvcli/py srvcli directory, make a new file called client member function.py, and then paste the following code inside:
+In the ros2 ws/src/py srvcli/py srvcli directory, a new file called client_member_function.py is needed to create and then paste the following code inside:
 
 ```
 import sys
@@ -306,8 +303,6 @@ if __name__ == '__main__':
     main()
  ```
     
-   
-![ff](https://user-images.githubusercontent.com/58104378/194229111-d402efb9-fee5-495b-80c1-bcee794bbda5.png)
 
 ## 3.1 Add an entry point
 Similar to how the service node needs an entry point, the client node also needs one.
@@ -322,18 +317,18 @@ entry_points={
     ],
 },
 ```
+![image](https://user-images.githubusercontent.com/113494159/194865968-9fb3a440-7461-4547-b41b-80e4a7ad0a21.png)
 
-
-![a1](https://user-images.githubusercontent.com/58104378/194230720-a5380f08-500a-4625-bdb7-5c61b9029189.png)
 
 ## 4 Build and Run
-Running rosdep in the workspace's root directory (ros2 ws) is a good idea to see if any dependencies are missing before building:
+
+*Running rosdep to check if any dependencies missing.*
 
 ```
 rosdep install -i --from-path src --rosdistro foxy -y
 ```
 
-Navigate back to the root of your workspace, ros2_ws, and build your new package:
+Navigate back, ros2_ws, and build your new package: (All the new packages are built here:)
 
 ```
 colcon build --packages-select py_srvcli
