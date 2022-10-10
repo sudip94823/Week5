@@ -15,6 +15,7 @@ wget https://raw.githubusercontent.com/ros2/examples/foxy/rclpy/topics/minimal_p
 ```
 New files is created after the command: publisher_member_function.py which is adjacent to __init__.py
 When the file is opened, it shows:
+
 ```
 import rclpy
 from rclpy.node import Node
@@ -55,12 +56,13 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-    
+```
+
 ### 2.1 Adding Dependencies
 Navigate to ros2_ws/src/py_pubsub directory.
 There you can see the 3 files: setup.py, setup.cfg, package.xml.
 After that, description, maintainer and lisense tags were filled after opening package.xml
-```
+
 ```
 <description>Examples of minimal publisher/subscriber using rclpy</description>
 <maintainer email="you@email.com">Your Name</maintainer>
@@ -68,19 +70,18 @@ After that, description, maintainer and lisense tags were filled after opening p
 ```
 
 After the lines above that correspond to the import declarations for your node,
-add the following dependencies:
+the following dependencies were added.
 
 ```
 <exec_depend>rclpy</exec_depend>
 <exec_depend>std_msgs</exec_depend>
 ```
+This declares the package needs rclpy and std_msgs when code is being executed.
 
-![a](https://user-images.githubusercontent.com/58104378/193937845-11dac2b3-a439-4d56-a8d2-7809e0f59b6f.png)
- make sure to save the file.
+ With everychanges made, it is important to save the file.
  
  ## 2.2 Adding an entry point.
- Take a look at setup.py. Make sure to check your package.xml one more time to make sure 
- the maintainer, maintainer email, description, and license columns match:
+ Open setup.py. And confirm the maintainer, maintainer email, description, and license columns match on package.xml. 
  
  ```
  maintainer='YourName',
@@ -98,7 +99,10 @@ entry_points={
 },
 ```
 
-dont forget to save the file.
+Save the file.
+
+![package_xml](https://user-images.githubusercontent.com/113494159/194859583-d1b67f1d-156b-4465-8d3f-2c5a1dc3c3c6.png)
+
 
 ## 2.3 setup.cfg
 The setup.cfg file should automatically contain the following information:
@@ -112,7 +116,7 @@ install-scripts=$base/lib/py_pubsub
 Simply instruct setuptools to place your executables in the lib directory, where ros2 run will look for them.
 
 ## 3. Writing the subscriber node
-You can create the following node by returning to ros2 ws/src/py pubsub/py pubsub. Fill in the following code on your terminal:
+ Fill in the following code on your terminal navigating to ros2_ws/src/py_pubsub/py_pubsub
 
 ```
 wget https://raw.githubusercontent.com/ros2/examples/foxy/rclpy/topics/minimal_subscriber/examples_rclpy_minimal_subscriber/subscriber_member_function.py
@@ -122,9 +126,6 @@ Now, the directory must include the following files:
 ```
 __init__.py  publisher_member_function.py  subscriber_member_function.py
 ```
-Now, Open the subscriber_member_function.py with your text editor.
-
-![b](https://user-images.githubusercontent.com/58104378/193944801-03a83d6c-b18b-423c-a838-12c185731d05.png)
 
 ## 3.1 Adding an enrty point
 Reopen setup.py and affix the entry point of the subscriber node below that of the publisher. The entry points field now should be:
@@ -137,12 +138,12 @@ entry_points={
         ],
 },
 ```
-![c](https://user-images.githubusercontent.com/58104378/193958652-8634046f-c301-4ea1-9e40-31241bace862.png)
-once the text file is saved your system should be operational.
+![image](https://user-images.githubusercontent.com/113494159/194861247-f61879b2-d6bf-4c29-afe2-726a74ab49d5.png)
+The system is operational once it is saved.
 
-## 4. Building and runnning
-Your ROS 2 system probably already has the rclpy and std msgs packages installed.
-Running rosdep in the workspace's root directory (ros2 ws) to check for any missing dependencies is recommended before building:
+## 4. Build and Run
+*Running rosdep to check on missing dependencies if any.*
+
 ```
 rosdep install -i --from-path src --rosdistro foxy -y
 ```
@@ -152,10 +153,8 @@ Still in the root of your workspace, ros2_ws, build your new package:
 ```
 colcon build --packages-select py_pubsub
 ```
-![d](https://user-images.githubusercontent.com/58104378/194220159-450b4f9f-a2eb-4025-ab9b-f4009e66e6ea.png)
 
-
-Open a new terminal, navigate to ros2_ws, and source the setup files:
+After that, navigate to ros2_ws and source the setup files in the new terminal.
 
 ```
 . install/setup.bash
@@ -165,21 +164,17 @@ Let's run the talker code now.
 ros2 run py_pubsub talker
 ```
 
-After a while the terminal should begin sending out info messages as follows:
-
-![e](https://user-images.githubusercontent.com/58104378/194221292-1f4d023f-7bef-455c-9d2c-948efa88a419.png)
-
 Open a fresh terminal, source the configuration files from ros2 ws once more, and then launch the listener node:
 ```
 ros2 run py_pubsub listener
 ```
 
 Starting at the publisher's current message count, the listener will begin writing messages to the console as follows:
+![#4TalkerNode](https://user-images.githubusercontent.com/113494159/194862438-f62e8d96-58f5-4c4d-831d-dd5463b6c027.png)
+![#5ListenerNode](https://user-images.githubusercontent.com/113494159/194862451-7c83a8dc-f455-4218-ad13-fa19f0a5adc7.png)
 
 
-![f](https://user-images.githubusercontent.com/58104378/194222439-a3270fa9-b201-4339-b704-b4d0bca88906.png)
-
-Ctrl+C will stop the nodes from repeating in each terminal.
+Ctrl+C will stop the nodes.
 
 
 # A simple Service & Client
